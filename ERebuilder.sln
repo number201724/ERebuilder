@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ERebuilder", "ERebuilder.vcxproj", "{E95CC319-ED25-4017-B963-7DEBD8374969}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Disasm", "Disasm\Disasm.vcxproj", "{0E6162D0-0AD9-4F35-9F0A-1B9D832CDEFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E95CC319-ED25-4017-B963-7DEBD8374969}.Release|Win32.ActiveCfg = Release|Win32
+		{E95CC319-ED25-4017-B963-7DEBD8374969}.Release|Win32.Build.0 = Release|Win32
+		{0E6162D0-0AD9-4F35-9F0A-1B9D832CDEFC}.Release|Win32.ActiveCfg = Release|Win32
+		{0E6162D0-0AD9-4F35-9F0A-1B9D832CDEFC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

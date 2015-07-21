@@ -1,0 +1,40 @@
+  ; ===========================================
+  ; uniime.inc copyright MASM32 1998 - 2005
+  ; ===========================================
+
+IFNDEF UNIIME_INC
+UNIIME_INC equ <1>
+
+UniAttachMiniIME PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniCandWndProc PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniCompWndProc PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniContextMenuWndProc PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniDetachMiniIME PROTO :DWORD,:DWORD
+UniImeConfigure PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeConversionList PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeDestroy PROTO :DWORD,:DWORD,:DWORD
+UniImeEnumRegisterWord PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeEscape PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeGetRegisterWordStyle PROTO :DWORD,:DWORD,:DWORD,:DWORD
+UniImeInquire PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeProcessKey PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeRegisterWord PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeSelect PROTO :DWORD,:DWORD,:DWORD,:DWORD
+UniImeSetActiveContext PROTO :DWORD,:DWORD,:DWORD,:DWORD
+UniImeSetCompositionString PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeToAsciiEx PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniImeUnregisterWord PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniNotifyIME PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniOffCaretWndProc PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniSearchPhrasePredictionA PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniSearchPhrasePrediction equ <UniSearchPhrasePredictionA>
+
+UniSearchPhrasePredictionW PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniStatusWndProc PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+UniUIWndProc PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+
+ELSE
+echo -----------------------------------------
+echo WARNING Duplicate include file uniime.inc
+echo -----------------------------------------
+ENDIF

@@ -1,0 +1,133 @@
+// 记录某程序段段数据中的重定位信息项。
+typedef struct
+{
+	// 重定位信息基址类别（宏值不可再改变）。
+	#define	RT_HELP_FUNC	0	// 相对于接口数据段段数据基址重定位
+	#define	RT_CONST		1	// 相对于常量数据段段数据基址重定位
+	#define	RT_GLOBAL_VAR	2	// 相对于全局变量数据段段数据基址重定位
+	#define	RT_CODE			3	// 相对于代码数据段段数据基址重定位
+	#define	RT_CALL_CMD		4	// 调用库命令的特殊重定位，目标地址处的高字为库索引，低字为该库内的命令索引
+	#define	RT_RESERVERD1	5	// 保留1,仅在静态编译的时候出现,忽略掉不处理即可.
+	unsigned m_btType : 3;
+	// 指定相对某程序段段数据首的一个偏移INT的位置，该INT内的值在重定位时必须加上由m_btType说明的基址。
+	unsigned m_dwOffset: 29;
+}
+REPOSITON_INF, *PREPOSITON_INF;
+
+// 程序数据段信息。
+typedef struct
+{
+    INT m_nSectionSize; // 本段信息的尺寸，为 sizeof (SECTION_INFO) + 所有附加数据尺寸。
+
+	// 记录下一数据段相对程序头信息首的偏移量，如本段为最后一段，此成员应为-1。
+	INT m_nNextSectionOffset;
+
+    // !!! 注意即使段数据被标明是只可读的，在实际写入到EXE文件中时也要将对应EXE段的
+    // 可写属性设置为真，因为段中的一些数据可能需要被重定位，从而需要修改权限。
+	#define	SCN_READ		(1 << 0)	// 本段数据是可读的。
+	#define	SCN_WRITE		(1 << 1)	// 本段数据是可写的。
+	#define	SCN_EXECUTE		(1 << 2)	// 本段数据包含可执行代码。
+	#define	SCN_DISCARDABLE	(1 << 3)	// 本段数据在程序载入完毕后即可被抛弃。
+	#define	SCN_EXTEND		(1 << 4)	// 本段数据载入后尺寸将被扩充（扩充算法为简单
+										// 地附加被初始化为0的数据空间）。
+	DWORD m_dwState;	// 记录本段的状态标志，见SCN宏。
+	#define	MAX_SECTION_NAME_LEN	20
+	char m_szName [MAX_SECTION_NAME_LEN + 4];	// 段名。
+	/* 段数据的载入后尺寸；
+			如段具有SCN_EXTEND标志，此成员记录段数据将被扩充到的尺寸。
+			否则等同于m_nRecordSize； */
+	INT m_nLoadedSize;
+	/* 段数据的记录尺寸（实际记录在文件中的数据尺寸），有可能为0。
+			如段具有SCN_EXTEND标志，此成员记录段数据被扩充前的尺寸。
+			否则等同于段数据的载入后尺寸。 */
+	INT m_nRecordSize;
+    // 段数据的偏移位置（相对于程序头信息首），如果没有记录段数据(即m_nRecordSize为0)，则为-1。
+	INT m_nRecordOffset;
+
+	//////////////////////////
+
+	INT m_nRePosItemCount;	// 段数据内所有需要重定位的偏移INT的数目。
+	INT m_nExportSymbolCount;	// 本段输出的符号数目（代码段为输出子程序，全局变量段为输出变量，等）。
+
+	/* 后面顺序为：
+        // 记录具体的所有重定位项。
+		REPOSITON_INF m_aryRePosItem [m_nRePosItemCount];
+        // 所输出符号的对应数据基于段数据首的位置偏移。
+		INT m_arySymbolDataOffset [m_nExportSymbolCount];
+        // 顺序存放所有输出符号的名称(注意不是存放文本指针)，与m_arySymbolDataOffset相对应。
+		char* m_szarySymbolName [m_nExportSymbolCount];
+	*/
+}
+SECTION_INFO, *PSECTION_INFO;
+
+/////////////////////////////////////////////////////////////
+
+
+// 编译后的程序头信息
+typedef struct
+{
+/*  原来的:
+	#define	NEW_E_APP_MARK  0x454E5457	// 'WTNE'
+    #define E_MARK_TEXT     " / MADE BY E COMPILER - WUTAO "  */
+    // 为防止误报，去掉明显的标志文本
+	// #define	NEW_E_APP_MARK  'JW'
+	#define	NEW_E_APP_MARK  0
+    #define E_MARK_TEXT     ""
+
+    DWORD	m_dwMark;		// 程序标记，应该为 NEW_E_APP_MARK 。
+    char    m_chMark [32];  // 用作放置易语言的说明文本E_MARK_TEXT。
+
+    INT     m_nHeaderSize;  // 本头信息的尺寸，为 sizeof (APP_HEADER_INFO) + 附加数据尺寸
+
+	INT		m_nVersion;		// 程序版本，从1开始。
+    INT     m_nType;        // 程序类型，为 PT_DEBUG_RUN_VER 或 PT_RELEASE_RUN_VER 。
+    #define ACS_IS_LIB      (1 << 0)    // 如果本程序为dll共享库则此标记置位。
+	DWORD	m_dwState;		// 程序的状态标志。
+
+	DWORD   m_dwCurFreeID;  // 易程序现行可用的ID值，只增不减。
+    INT     m_nDllCmdCount; // 易程序中定义的DllCmd数目。
+
+	// 程序启动入口点的代码偏移（相对于本头信息首）。
+	INT m_nStartCodeOffset;
+
+	///////////////////////////////////	段信息
+
+/*  原来的:
+    #define SN_CONST        _T("@const")
+    #define SN_FORM         _T("@form")
+    #define SN_HELPFUNC     _T("@hlpfn")
+    #define SN_CODE         _T("@code")
+    #define SN_VAR          _T("@var")
+    #define SN_APP_RELOC    _T("@reloc1")   // 记录代码中所有被直接使用的窗口单元ID、支持库索引、支持库数据类型值的偏移位置。  */
+
+
+    // 下面宏指定标准段的段名。
+    // 为了防止误报，使用不容易被误报的名称
+    #define SN_CONST        _T("const")
+    #define SN_FORM         _T("form")
+    #define SN_HELPFUNC     _T("help")
+    #define SN_CODE         _T("code")
+    #define SN_VAR          _T("var")
+    #define SN_IMPORT       _T("import")
+    #define SN_EXPORT       _T("export")
+    // 此名称由于krnl中曾经使用过，不方便更改，所以保持原有的。
+    #define SN_APP_RELOC    _T("@reloc1")   // 记录代码中所有被直接使用的窗口单元ID、支持库索引、支持库数据类型值的偏移位置。
+
+    // 记录用作快速定位的段信息位置，所有偏移位置均相对相对于本头信息首，
+    // 如果该段不存在，则为 -1 。
+	INT m_nConstSectionOffset;		// 常量数据段位置的偏移量，段标志：SCN_READ
+	INT m_nWinFormSectionOffset;	// 窗口模板数据段位置的偏移量，段标志：SCN_READ
+	/* 接口数据段位置的偏移量，段标志：SCN_READ 内容为 HELP_FUNC m_func;  */
+	INT m_nHelpFuncSectionOffset;
+	INT m_nCodeSectionOffset;	// 代码数据段位置的偏移量，段标志：SCN_READ | SCN_EXECUTE
+	INT m_nVarSectionOffset;	// 未初始化全局变量数据段位置的偏移量，段标志：SCN_READ | SCN_WRITE | SCN_EXTEND
+
+	// 记录所有数据段信息的链首。
+	// 本成员提供首数据段的 SECTION_INFO 信息相对于本头信息首的偏移量，如无任何数据段，为-1。
+	INT m_nBeginSectionOffset;
+
+    // 1、INT m_nDllFileNameConstOffset [m_nDllCmdCount];   // 为在常量段中的偏移。
+    // 2、INT m_nDllCmdNameConstOffset [m_nDllCmdCount];    // 为在常量段中的偏移。
+	// 3、顺序存放程序中所有被使用支持库的支持库指定串，以空文本串结束。
+}
+APP_HEADER_INFO, *PAPP_HEADER_INFO;

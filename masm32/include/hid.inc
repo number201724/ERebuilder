@@ -1,0 +1,58 @@
+  ; ===========================================
+  ; hid.inc copyright MASM32 1998 - 2005
+  ; ===========================================
+
+IFNDEF HID_INC
+HID_INC equ <1>
+
+HidD_FlushQueue PROTO :DWORD
+HidD_FreePreparsedData PROTO :DWORD
+HidD_GetAttributes PROTO :DWORD,:DWORD
+HidD_GetConfiguration PROTO :DWORD,:DWORD,:DWORD
+HidD_GetFeature PROTO :DWORD,:DWORD,:DWORD
+HidD_GetHidGuid PROTO :DWORD
+HidD_GetIndexedString PROTO :DWORD,:DWORD,:DWORD,:DWORD
+HidD_GetInputReport PROTO :DWORD,:DWORD,:DWORD
+HidD_GetManufacturerString PROTO :DWORD,:DWORD,:DWORD
+HidD_GetMsGenreDescriptor PROTO :DWORD,:DWORD,:DWORD
+HidD_GetNumInputBuffers PROTO :DWORD,:DWORD
+HidD_GetPhysicalDescriptor PROTO :DWORD,:DWORD,:DWORD
+HidD_GetPreparsedData PROTO :DWORD,:DWORD
+HidD_GetProductString PROTO :DWORD,:DWORD,:DWORD
+HidD_GetSerialNumberString PROTO :DWORD,:DWORD,:DWORD
+HidD_Hello PROTO :DWORD,:DWORD
+HidD_SetConfiguration PROTO :DWORD,:DWORD,:DWORD
+HidD_SetFeature PROTO :DWORD,:DWORD,:DWORD
+HidD_SetNumInputBuffers PROTO :DWORD,:DWORD
+HidD_SetOutputReport PROTO :DWORD,:DWORD,:DWORD
+HidP_GetButtonCaps PROTO :DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetCaps PROTO :DWORD,:DWORD
+HidP_GetData PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetExtendedAttributes PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetLinkCollectionNodes PROTO :DWORD,:DWORD,:DWORD
+HidP_GetScaledUsageValue PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetSpecificButtonCaps PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetSpecificValueCaps PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetUsageValue PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetUsageValueArray PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetUsages PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetUsagesEx PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_GetValueCaps PROTO :DWORD,:DWORD,:DWORD,:DWORD
+HidP_InitializeReportForID PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_MaxDataListLength PROTO :DWORD,:DWORD
+HidP_MaxUsageListLength PROTO :DWORD,:DWORD,:DWORD
+HidP_SetData PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_SetScaledUsageValue PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_SetUsageValue PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_SetUsageValueArray PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_SetUsages PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_TranslateUsagesToI8042ScanCodes PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_UnsetUsages PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidP_UsageListDifference PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+HidservInstaller PROTO :DWORD,:DWORD,:DWORD,:DWORD
+
+ELSE
+echo -----------------------------------------
+echo WARNING Duplicate include file hid.inc
+echo -----------------------------------------
+ENDIF

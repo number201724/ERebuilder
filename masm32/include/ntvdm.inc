@@ -1,0 +1,174 @@
+  ; ===========================================
+  ; ntvdm.inc copyright MASM32 1998 - 2005
+  ; ===========================================
+
+IFNDEF NTVDM_INC
+NTVDM_INC equ <1>
+
+BlockWOWIdle PROTO :DWORD
+DBGNotifyDebugged PROTO :DWORD
+DBGNotifyNewTask PROTO :DWORD,:DWORD
+DBGNotifyRemoteThreadAddress PROTO :DWORD,:DWORD
+DispatchInterrupts PROTO 
+DpmiSetIncrementalAlloc PROTO :DWORD
+GetDOSAppName PROTO :DWORD
+GetWOWShortCutInfo PROTO :DWORD,:DWORD
+IsCdRomFile PROTO :DWORD
+MGetVdmPointer PROTO :DWORD,:DWORD,:DWORD
+RegisterWOWIdle PROTO 
+ResumeTimerThread PROTO 
+SetShadowDescriptorEntries PROTO :DWORD,:DWORD
+Sim32pGetVDMPointer PROTO :DWORD,:DWORD
+SoftPcEoi PROTO :DWORD,:DWORD
+SuspendTimerThread PROTO 
+VDDAllocMem PROTO :DWORD,:DWORD,:DWORD
+VDDAllocateDosHandle PROTO :DWORD,:DWORD,:DWORD
+VDDAssociateNtHandle PROTO :DWORD,:DWORD,:DWORD
+VDDDeInstallIOHook PROTO :DWORD,:DWORD,:DWORD
+VDDDeInstallMemoryHook PROTO :DWORD,:DWORD,:DWORD
+VDDDeInstallUserHook PROTO :DWORD
+VDDExcludeMem PROTO :DWORD,:DWORD,:DWORD
+VDDFreeMem PROTO :DWORD,:DWORD,:DWORD
+VDDIncludeMem PROTO :DWORD,:DWORD,:DWORD
+VDDInstallIOHook PROTO :DWORD,:DWORD,:DWORD,:DWORD
+VDDInstallMemoryHook PROTO :DWORD,:DWORD,:DWORD,:DWORD
+VDDInstallUserHook PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+VDDQueryDMA PROTO :DWORD,:DWORD,:DWORD
+VDDQueryDM equ <VDDQueryDMA>
+
+VDDReleaseDosHandle PROTO :DWORD,:DWORD
+VDDReleaseIrqLine PROTO :DWORD,:DWORD
+VDDRequestDMA PROTO :DWORD,:DWORD,:DWORD,:DWORD
+VDDRequestDM equ <VDDRequestDMA>
+
+VDDReserveIrqLine PROTO :DWORD,:DWORD
+VDDRetrieveNtHandle PROTO :DWORD,:DWORD,:DWORD,:DWORD
+VDDSetDMA PROTO :DWORD,:DWORD,:DWORD,:DWORD
+VDDSetDM equ <VDDSetDMA>
+
+VDDSimulate16 PROTO 
+VDDTerminateVDM PROTO 
+VdmDbgAttach PROTO 
+VdmGetParametersInfoError PROTO 
+VdmMapFlat PROTO :DWORD,:DWORD,:DWORD
+VdmParametersInfo PROTO :DWORD,:DWORD,:DWORD
+VdmTraceEvent PROTO :DWORD,:DWORD,:DWORD
+WOWSysErrorBox PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+WaitIfIdle PROTO 
+call_ica_hw_interrupt PROTO :DWORD,:DWORD,:DWORD
+cmdCheckTemp PROTO :DWORD
+cmdCheckTempInit PROTO 
+cpu_createthread PROTO :DWORD,:DWORD
+demClientErrorEx PROTO :DWORD,:DWORD,:DWORD
+demFileDelete PROTO :DWORD
+demFileFindFirst PROTO :DWORD,:DWORD,:DWORD
+demFileFindNext PROTO :DWORD
+demGetCurrentDirectoryLCDS PROTO :DWORD,:DWORD
+demGetFileTimeByHandle_WOW PROTO :DWORD
+demGetPhysicalDriveType PROTO :DWORD
+demIsShortPathName PROTO :DWORD,:DWORD
+demLFNCleanup PROTO 
+demLFNGetCurrentDirectory PROTO :DWORD,:DWORD
+demSetCurrentDirectoryGetDrive PROTO :DWORD,:DWORD
+demSetCurrentDirectoryLCDS PROTO :DWORD,:DWORD
+demWOWLFNAllocateSearchHandle PROTO :DWORD
+demWOWLFNCloseSearchHandle PROTO :DWORD
+demWOWLFNEntry PROTO :DWORD
+demWOWLFNGetSearchHandle PROTO :DWORD
+demWOWLFNInit PROTO :DWORD
+getAF PROTO 
+getAH PROTO 
+getAL PROTO 
+getAX PROTO 
+getBH PROTO 
+getBL PROTO 
+getBP PROTO 
+getBX PROTO 
+getCF PROTO 
+getCH PROTO 
+getCL PROTO 
+getCS PROTO 
+getCX PROTO 
+getDF PROTO 
+getDH PROTO 
+getDI PROTO 
+getDL PROTO 
+getDS PROTO 
+getDX PROTO 
+getEAX PROTO 
+getEBP PROTO 
+getEBX PROTO 
+getECX PROTO 
+getEDI PROTO 
+getEDX PROTO 
+getEFLAGS PROTO 
+getEIP PROTO 
+getES PROTO 
+getESI PROTO 
+getESP PROTO 
+getFS PROTO 
+getGS PROTO 
+getIF PROTO 
+getIP PROTO 
+getIntelRegistersPointer PROTO 
+getMSW PROTO 
+getOF PROTO 
+getPF PROTO 
+getSF PROTO 
+getSI PROTO 
+getSP PROTO 
+getSS PROTO 
+getZF PROTO 
+host_CreateThread PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+host_ExitThread PROTO :DWORD
+host_com_close PROTO :DWORD
+host_direct_access_error PROTO :DWORD
+host_simulate PROTO 
+setAF PROTO :DWORD
+setAH PROTO :DWORD
+setAL PROTO :DWORD
+setAX PROTO :DWORD
+setBH PROTO :DWORD
+setBL PROTO :DWORD
+setBP PROTO :DWORD
+setBX PROTO :DWORD
+setCF PROTO :DWORD
+setCH PROTO :DWORD
+setCL PROTO :DWORD
+setCS PROTO :DWORD
+setCX PROTO :DWORD
+setDF PROTO :DWORD
+setDH PROTO :DWORD
+setDI PROTO :DWORD
+setDL PROTO :DWORD
+setDS PROTO :DWORD
+setDX PROTO :DWORD
+setEAX PROTO :DWORD
+setEBP PROTO :DWORD
+setEBX PROTO :DWORD
+setECX PROTO :DWORD
+setEDI PROTO :DWORD
+setEDX PROTO :DWORD
+setEFLAGS PROTO :DWORD
+setEIP PROTO :DWORD
+setES PROTO :DWORD
+setESI PROTO :DWORD
+setESP PROTO :DWORD
+setFS PROTO :DWORD
+setGS PROTO :DWORD
+setIF PROTO :DWORD
+setIP PROTO :DWORD
+setMSW PROTO :DWORD
+setOF PROTO :DWORD
+setPF PROTO :DWORD
+setSF PROTO :DWORD
+setSI PROTO :DWORD
+setSP PROTO :DWORD
+setSS PROTO :DWORD
+setZF PROTO :DWORD
+
+ELSE
+echo -----------------------------------------
+echo WARNING Duplicate include file ntvdm.inc
+echo -----------------------------------------
+ENDIF
